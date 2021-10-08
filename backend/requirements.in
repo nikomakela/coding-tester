@@ -6,3 +6,5 @@ factory-boy
 certifi
 urllib3
 djongo
+gunicorn
+django-allauth
