@@ -18,7 +18,7 @@ export default defineComponent({
 <template>
   <Hero title="Do you have what it takes to be a Maverick?"></Hero>
   <Section>
-    <Form></Form>
+    <Form />
   </Section>
 </template>
 

@@ -14,7 +14,6 @@ export default defineComponent({
       text-white
       p-16
       text-center
-      h-64
       flex
       items-center
       justify-center
@@ -23,3 +22,13 @@ export default defineComponent({
     <h1 class="text-4xl">{{ title }}</h1>
   </header>
 </template>
+
+<style scoped>
+header {
+  min-height: 75vh;
+}
+h1 {
+  font-size: 75px;
+  line-height: 1;
+}
+</style>

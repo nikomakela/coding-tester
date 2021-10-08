@@ -1,5 +1,7 @@
 <template>
-  <section class="bg-red-500 p-8">
-    <slot></slot>
+  <section class="bg-red-500 p-8 flex items-center justify-center">
+    <div>
+      <slot></slot>
+    </div>
   </section>
 </template>
