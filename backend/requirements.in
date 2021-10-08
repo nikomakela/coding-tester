@@ -1,0 +1,8 @@
+django
+django-cors-headers
+django-environ
+django-axes
+factory-boy
+certifi
+urllib3
+djongo
