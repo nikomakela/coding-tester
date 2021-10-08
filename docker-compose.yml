@@ -1,0 +1,45 @@
+# Use postgres/example user/password credentials
+version: "3"
+services:
+  mongo:
+    image: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: coding-tester
+      MONGO_INITDB_ROOT_PASSWORD: coding-tester
+
+  backend:
+    build: ./backend
+    #command: gunicorn coding_tester.wsgi:application --bind 0.0.0.0:8000
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - static_volume:/code/static
+    ports:
+      - "8000:8000"
+    # expose:
+    #   - 8081
+    depends_on:
+      - mongo
+    environment:
+      - DATABASE_NAME:coding-tester
+      - DATABASE_USER:coding-tester
+      - DATABASE_PASSWORD:coding-tester
+      - DATABASE_HOST:mongo
+  # nginx:
+  #   build: ./nginx
+  #   volumes:
+  #     - static_volume:/code/static
+  #     - ./data/certbot/conf:/etc/letsencrypt
+  #     - ./data/certbot/www:/var/www/certbot
+  #   ports:
+  #     - 8080:80
+  #     - 4433:443
+  #   depends_on:
+  #     - backend
+  # certbot:
+  #   image: certbot/certbot:v0.36.0
+  #   volumes:
+  #     - ./data/certbot/conf:/etc/letsencrypt
+  #     - ./data/certbot/www:/var/www/certbot
+volumes:
+  static_volume:
