@@ -4,8 +4,11 @@ services:
   mongo:
     image: mongo
     restart: always
+<<<<<<< HEAD
     ports:
       - "27017:27017"
+=======
+>>>>>>> 7f209f3f8024d14b2e73946005b1467306237b5a
     environment:
       MONGO_INITDB_ROOT_USERNAME: coding-tester
       MONGO_INITDB_ROOT_PASSWORD: coding-tester

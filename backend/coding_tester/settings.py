@@ -90,6 +90,7 @@ WSGI_APPLICATION = "coding_tester.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
+
 DATABASES = {
     "default": {
         "ENGINE": "djongo",

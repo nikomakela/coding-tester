@@ -1,0 +1,21 @@
+{% extends "tester/layout.jinja" %}
+{% block title %}Test your solution for {{ assignment }}{% endblock %}
+{% block content %}
+<form action="{{ url('tester:runtests', kwargs={'assignment':assignment}) }}"
+	method="post">
+  <p>With this tool, you can run automated tests against your
+  implementation of {{ assignment }}.</p>
+
+  <p><label for="endpoint_url">URL address of the endpoint of your
+  implementation:<br> <input type="text" id="endpoint_url"
+  name="endpoint_url"></p>
+
+  <input type="submit" value="Test my solution">
+  {{ csrf_input }}
+</form>
+
+{% if assignment in ['fibonacci','sananmuunnos','zerodepth'] %}
+<p>What should the {{ assignment }} endpoint do?</p>
+{% include "tester/explanations/%s.jinja" % assignment %}
+{% endif %}
+{% endblock %}
