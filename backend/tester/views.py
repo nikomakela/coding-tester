@@ -16,13 +16,16 @@ jinja_context = dict(
 )
 
 
-def submission_form(request, **kw):
+def submission_form(request, assignment=jinja_context["assignment"], **kw):
     if request.GET.get("format") == "json":
-        assignment = jinja_context["assignment"]
         explanation_template = f"tester/explanations/{assignment}.jinja"
         content = render_to_string(explanation_template, jinja_context)
         return JsonResponse({"content": content}, safe=True)
-    return render(request, "tester/submission_form.jinja", {**jinja_context, **kw})
+    return render(
+        request,
+        "tester/submission_form.jinja",
+        {**jinja_context, **kw, **{"assignment": assignment}},
+    )
 
 
 def save_test_results(assignment, endpoint, results):
