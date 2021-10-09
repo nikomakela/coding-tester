@@ -6,13 +6,14 @@ from django.utils import timezone
 from django.http import JsonResponse
 from django.template.loader import render_to_string
 from django.forms.models import model_to_dict
+from django.conf import settings
 
 
 from .models import Submission
 from .testing import run_tests_against, FailedTest
 
 jinja_context = dict(
-    assignment="sananmuunnos",
+    assignment=list(settings.TEST_ASSIGNMENTS.keys())[0],
     url=reverse,
     static=static,
 )

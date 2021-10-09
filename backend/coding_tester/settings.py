@@ -13,6 +13,12 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 from pathlib import Path
 import environ
 
+from test_assignments.fibonacci import generate_fibo
+from test_assignments.sananmuunnos import generate_swaps
+
+# from test_assignments.flatten import generate_flatten
+# from test_assignments.zerodepth import generate_zero_trees
+
 env = environ.Env(
     DEBUG=(bool, True),
     DATABASE_URL=(str, ""),
@@ -54,6 +60,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "corsheaders",
     "tester",
+    "test_assignments",
 ]
 
 SITE_ID = 1
@@ -168,3 +175,10 @@ STATIC_ROOT = env.path("VAR_ROOT")("static")
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 CORS_ALLOW_ALL_ORIGINS = True
+
+TEST_ASSIGNMENTS = {
+    "sananmuunnos": generate_swaps,
+    "fibonacci": generate_fibo,
+    # "flatten": generate_flatten,
+    # "zerodepth": generate_zero_trees,
+}

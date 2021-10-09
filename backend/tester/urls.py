@@ -1,6 +1,6 @@
 from django.urls import path
 
-from . import views, examples
+from . import views
 
 app_name = "tester"
 
@@ -16,5 +16,4 @@ urlpatterns = [
         views.save_submission,
         name="savesubmission",
     ),
-    path("fibonacci-example", examples.nth_fibo, name="solution-example"),
 ]
