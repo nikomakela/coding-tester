@@ -12,7 +12,6 @@ export default defineComponent({
 })
 </script>
 
-
 <template>
   <Hero title="About"></Hero>
   <Section><h2 class="text-center">This could be an about page.</h2></Section>
