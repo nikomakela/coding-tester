@@ -7,6 +7,5 @@ certifi
 urllib3
 djongo
 gunicorn
-django-allauth
 Jinja2
-
+requests
