@@ -6,10 +6,7 @@ import Instructions from '../components/Instructions.vue'
 import Form from '../components/Form.vue'
 
 export default defineComponent({
-  setup() {
-    console.log(import.meta.env.MODE)
-    console.log(import.meta.env.VITE_API_ENDPOINT)
-  },
+  setup() {},
   components: {
     Hero,
     Section,
@@ -22,13 +19,10 @@ export default defineComponent({
 
 <template>
   <Hero title="Do you have what it takes to be a Maverick?"></Hero>
-  <Section class="bg-red-400">
+  <Section class="bg-gray-800">
     <Instructions />
   </Section>
-  <Section class="bg-gray-700">
+  <Section class="bg-gray-900">
     <Form />
   </Section>
 </template>
-
-<style>
-</style>

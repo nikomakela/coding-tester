@@ -7,7 +7,6 @@ export interface FormData {
 }
 
 export const getInstructions = async (testAssignment: string) => {
-  console.log('instruction', import.meta.env.VITE_API_ENDPOINT)
   const response = await fetch(
     `${import.meta.env.VITE_API_ENDPOINT}/${testAssignment}/solve?format=json`
   )
@@ -35,7 +34,6 @@ export const checkImplementation = async (
     }
   )
   const json = await response.json()
-  console.log(json)
   return json
 }
 
@@ -53,7 +51,6 @@ export const submitInformation = async (testType: string, formData: any) => {
     }
   )
   const json = await response.json()
-  console.log(json)
   return json
 }
 
