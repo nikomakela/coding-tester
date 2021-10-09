@@ -97,8 +97,12 @@ def save_submission(request, **kw):
         assignment_name=kw["assignment"],
         submission_endpoint_address=request.POST["endpoint_url"],
     )
+    submission.applicant_name = request.POST["applicant_name"]
+    submission.applicant_phone = request.POST["applicant_phone"]
     submission.applicant_address = request.POST["applicant_address"]
     submission.submission_code_address = request.POST["source_code_url"]
+    submission.own_tech_competence = request.POST["own_tech_competence"]
+    submission.work_experience = request.POST["work_experience"]
     submission.save()
 
     if request.POST.get("format") == "json":

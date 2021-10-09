@@ -18,12 +18,24 @@ give the following extra information:</p>
     kwargs=dict(assignment=assignment,
 	submission=submission)) }}">
 
-  <p><label for="applicant_address">Your email (for later identification):<br>
+  <p><label for="source_code_url">URL for the source code of your
+  application (must work with <code>git clone</code>):</label><br>
+  <input type="text" id="source_code_url" name="source_code_url"></p>
+
+  <p><label for="applicant_name">Your name:</label><br>
+  <input type="text" id="applicant_name" name="applicant_name"></p>
+
+  <p><label for="applicant_address">Your email:</label><br>
   <input type="text" id="applicant_address" name="applicant_address"></p>
 
-  <p><label for="source_code_url">URL for the source code of your
-  application (must work with <code>git clone</code>):<br>
-  <input type="text" id="source_code_url" name="source_code_url"></p>
+  <p><label for="applicant_phone">Your phone:</label><br>
+  <input type="text" id="applicant_phone" name="applicant_phone"></p>
+
+  <p><label for="own_tech_competence">Tech competence:</label><br>
+  <textarea id="own_tech_competence" name="own_tech_competence" rows="8"></textarea></p>
+
+  <p><label for="work_experience">Work experience:</label><br>
+  <textarea id="work_experience" name="work_experience" rows="8"></textarea></p>
 
   <input type="submit" value="Submit my solution to {{ assignment }}">
   <input type="hidden" name="endpoint_url"
