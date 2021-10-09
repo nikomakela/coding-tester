@@ -2,12 +2,7 @@
 {% block title %}There were some failed tests{% endblock %}
 {% block content %}
 <p>What went wrong: {{ reason }}</p>
-
 <p>
-{% if problem %}Calling {{ endpoint }} produced {{ problem }}.{% endif %}
-{% if result %}Your output was "{{ result }}" when it should have been
-"{{ expected }}" for the input "{{ input }}".{% endif %}
-{% if unknown %}I don't know about {{ unknown }}.{% endif %}
+{% include "tester/errors/errorreport.jinja" %}
 </p>
-
 {% endblock %}

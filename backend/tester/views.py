@@ -5,6 +5,7 @@ from django.urls import reverse
 from django.utils import timezone
 from django.http import JsonResponse
 from django.template.loader import render_to_string
+from django.core import serializers
 
 from .models import Submission
 from .testing import run_tests_against, FailedTest
@@ -49,19 +50,26 @@ def run_tests(request, **kw):
     try:
         results = run_tests_against(assignment, endpoint)
     except FailedTest as e:
+        if request.POST.get("format") == "json":
+            return JsonResponse(e.content, safe=True)
+
         return render(
-            request, "tester/failed_test.jinja", {**jinja_context, **e.content}
+            request,
+            "tester/failed_test.jinja",
+            {**jinja_context, **{"assignment": assignment}, **e.content},
         )
     submission = save_test_results(assignment, endpoint, results)
-    return HttpResponseRedirect(
-        reverse(
+    redirect_url = "{path}{params}".format(
+        path=reverse(
             "tester:results",
             args=(
                 assignment,
                 submission.id,
             ),
-        )
+        ),
+        params="?format=json" if request.POST.get("format") == "json" else "",
     )
+    return HttpResponseRedirect(redirect_url)
 
 
 def show_results(request, **kw):
@@ -71,6 +79,15 @@ def show_results(request, **kw):
         applicant_address="",
         submission_code_address="",
     )
+    if request.GET.get("format") == "json":
+        serialized_obj = serializers.serialize(
+            "json",
+            [
+                submission,
+            ],
+        )
+        return JsonResponse({"results": serialized_obj}, safe=True)
+
     return render(
         request,
         "tester/result_report.jinja",
