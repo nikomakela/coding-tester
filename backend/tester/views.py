@@ -5,7 +5,8 @@ from django.urls import reverse
 from django.utils import timezone
 from django.http import JsonResponse
 from django.template.loader import render_to_string
-from django.core import serializers
+from django.forms.models import model_to_dict
+
 
 from .models import Submission
 from .testing import run_tests_against, FailedTest
@@ -80,13 +81,7 @@ def show_results(request, **kw):
         submission_code_address="",
     )
     if request.GET.get("format") == "json":
-        serialized_obj = serializers.serialize(
-            "json",
-            [
-                submission,
-            ],
-        )
-        return JsonResponse({"results": serialized_obj}, safe=True)
+        return JsonResponse({"results": model_to_dict(submission)}, safe=True)
 
     return render(
         request,
