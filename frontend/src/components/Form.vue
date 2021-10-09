@@ -10,7 +10,7 @@ enum FormStatus {
 }
 
 interface FormData {
-  implementationEndpoint: string | null
+  endpoint_url: string | null
   id: string | null
   applicant_address: string | null
   source_code_url: string | null
@@ -20,9 +20,9 @@ interface FormData {
 export default defineComponent({
   setup() {
     const isSaving = ref(false)
-    const formStatus: Ref<FormStatus> = ref(FormStatus.Success)
+    const formStatus: Ref<FormStatus> = ref(FormStatus.Initial)
     const formData: Ref<FormData> = ref({
-      implementationEndpoint: 'https://fibonacci-sequence-test.herokuapp.com/',
+      endpoint_url: 'https://fibonacci-sequence-test.herokuapp.com/',
       id: null,
       applicant_address: 'jussi.polkki@mavericks.fi',
       source_code_url: 'https://github.com/nikomakela/coding-tester',
@@ -37,16 +37,17 @@ export default defineComponent({
   },
   methods: {
     async checkSolution() {
-      if (!this.formData.implementationEndpoint) return
+      if (!this.formData.endpoint_url) return
 
       this.isSaving = true
       const json = await checkImplementation(
         'fibonacci',
-        this.formData.implementationEndpoint
+        this.formData.endpoint_url
       )
       console.log(json)
       this.isSaving = false
       if (json.results?.id) {
+        this.formData.id = json.results.id
         this.formStatus = FormStatus.Success
       }
     },
@@ -77,7 +78,7 @@ export default defineComponent({
         >
         <input
           type="text"
-          v-model="formData.implementationEndpoint"
+          v-model="formData.endpoint_url"
           placeholder="Endpoint URL..."
           :disabled="formStatus === 'success'"
         />
