@@ -12,7 +12,11 @@ enum FormStatus {
 interface FormData {
   endpoint_url: string | null
   id: string | null
+  applicant_name: string | null
   applicant_address: string | null
+  applicant_phone: string | null
+  own_tech_competence: string | null
+  work_experience: string | null
   source_code_url: string | null
   format: string
 }
@@ -24,8 +28,12 @@ export default defineComponent({
     const formData: Ref<FormData> = ref({
       endpoint_url: 'https://fibonacci-sequence-test.herokuapp.com/',
       id: null,
+      applicant_name: 'Jussi Pölkki',
       applicant_address: 'jussi.polkki@mavericks.fi',
+      applicant_phone: '+358501234567',
       source_code_url: 'https://github.com/nikomakela/coding-tester',
+      own_tech_competence: 'Typescript & Django',
+      work_experience: '99 years',
       format: 'json',
     })
 
@@ -95,12 +103,22 @@ export default defineComponent({
         </button>
       </div>
 
-      <div v-if="formStatus === 'success'">
+      <div v-if="formStatus === 'success' || formStatus === 'final'">
         <h2 class="px-8 py-4 my-8 bg-green-500">
           Congratulations! Your implementation passed all tests!
         </h2>
 
         <p>Now fill the rest of the fields and we'll be in touch with you!</p>
+
+        <div class="form-group">
+          <label for="email">Your name:</label>
+          <input
+            id="name"
+            type="name"
+            v-model="formData.applicant_name"
+            placeholde="Input name"
+          />
+        </div>
 
         <div class="form-group">
           <label for="email">Your email:</label>
@@ -109,6 +127,16 @@ export default defineComponent({
             type="email"
             v-model="formData.applicant_address"
             placeholde="Input email"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="email">Your phone number:</label>
+          <input
+            id="phone"
+            type="phone"
+            v-model="formData.applicant_phone"
+            placeholde="Input phone"
           />
         </div>
 
@@ -125,6 +153,28 @@ export default defineComponent({
           />
         </div>
 
+        <div class="form-group">
+          <label for="own_tech_competence"
+            >Your favorite languages or tech:</label
+          >
+          <input
+            id="own_tech_competence"
+            type="email"
+            v-model="formData.own_tech_competence"
+            placeholde="Input "
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="work_experience">Your brief work experience:</label>
+          <input
+            id="work_experience"
+            type="email"
+            v-model="formData.work_experience"
+            placeholde="Tell us some things you have done."
+          />
+        </div>
+
         <div v-if="formStatus === 'success'">
           <button
             @click="finalSubmit"
@@ -134,6 +184,13 @@ export default defineComponent({
             <span v-if="isSaving">Submitting your information... </span>
             <span v-else> Submit </span>
           </button>
+        </div>
+
+        <div v-if="formStatus === 'final'">
+          <h2 class="px-8 py-4 my-8 bg-green-500">
+            Form submission was successful. Thank you for getting in touch.
+            We'll get back to you as soon as possible.
+          </h2>
         </div>
       </div>
     </form>
