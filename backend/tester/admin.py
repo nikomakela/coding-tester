@@ -20,7 +20,8 @@ class SubmissionAdmin(admin.ModelAdmin):
     date_hierarchy = "submission_time"
 
     def download_csv(self, request, qset):
-        import csv, django.http
+        import csv
+        import django.http
 
         res = django.http.HttpResponse(content_type="text/csv")
         res["Content-Disposition"] = "attachment; filename=submissions.csv"

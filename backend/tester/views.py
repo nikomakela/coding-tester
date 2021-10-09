@@ -6,6 +6,7 @@ from django.utils import timezone
 from django.http import JsonResponse
 from django.template.loader import render_to_string
 from django.forms.models import model_to_dict
+from django.views.decorators.csrf import csrf_exempt
 
 
 from .models import Submission
@@ -42,6 +43,7 @@ def save_test_results(assignment, endpoint, results):
     return sub
 
 
+@csrf_exempt
 def run_tests(request, **kw):
     assignment = kw["assignment"]
     try:
@@ -90,6 +92,7 @@ def show_results(request, **kw):
     )
 
 
+@csrf_exempt
 def save_submission(request, **kw):
     submission = get_object_or_404(
         Submission,
