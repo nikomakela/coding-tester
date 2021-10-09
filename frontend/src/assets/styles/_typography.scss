@@ -1,0 +1,59 @@
+@font-face {
+  font-family: 'greycliff';
+  src: url('/assets/fonts/3917greycliff.woff2') format('woff2'),
+    url('/assets/fonts/3917greycliff.woff') format('woff');
+  font-display: auto;
+}
+
+.greycliff {
+  font-family: 'greycliff' !important;
+}
+
+@font-face {
+  font-family: 'greycliff-bold';
+  src: url('/assets/fonts/8687greycliff-bold.woff2') format('woff2'),
+    url('/assets/fonts/8687greycliff-bold.woff') format('woff');
+  font-display: auto;
+}
+
+.greycliff-bold {
+  font-family: 'greycliff-bold' !important;
+}
+
+@font-face {
+  font-family: 'greycliff-light';
+  src: url('/assets/fonts/2031greycliff-light.woff2') format('woff2'),
+    url('/assets/fonts/2031greycliff-light.woff') format('woff');
+  font-display: auto;
+}
+
+.greycliff-light {
+  font-family: 'greycliff-light' !important;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.site-title,
+strong,
+b {
+  font-family: 'greycliff-bold' !important;
+}
+.site-description,
+p,
+li,
+a {
+  font-family: 'greycliff-light' !important;
+}
+.entry-title,
+.widget-title,
+body,
+.menu-navigation-container li a,
+.menu-navigation-container li span,
+#menu-navigation li a,
+#menu-navigation li span {
+  font-family: 'greycliff' !important;
+}
