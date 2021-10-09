@@ -60,7 +60,6 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "corsheaders",
     "tester",
-    "test_assignments",
 ]
 
 SITE_ID = 1
