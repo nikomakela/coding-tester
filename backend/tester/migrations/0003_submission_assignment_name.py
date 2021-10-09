@@ -6,13 +6,17 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('tester', '0002_auto_20200825_1920'),
+        ("tester", "0002_auto_20200825_1920"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='submission',
-            name='assignment_name',
-            field=models.CharField(default='', help_text='The name of the coding assignment this is a submission for', max_length=256),
+            model_name="submission",
+            name="assignment_name",
+            field=models.CharField(
+                default="",
+                help_text="The name of the coding assignment this is a submission for",
+                max_length=256,
+            ),
         ),
     ]
