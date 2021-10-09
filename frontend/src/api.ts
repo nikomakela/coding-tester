@@ -6,17 +6,16 @@ export interface FormData {
   format: string
 }
 
-export const getInstructions = async () => {
-  console.log('instruction', import.meta.env.VITE_API_ENDPOINT)
+export const getInstructions = async (testAssignment: string) => {
   const response = await fetch(
-    `${import.meta.env.VITE_API_ENDPOINT}/fibonacci/solve?format=json`
+    `${import.meta.env.VITE_API_ENDPOINT}/${testAssignment}/solve?format=json`
   )
   const json = await response.json()
   return json
 }
 
 export const checkImplementation = async (
-  testType: string,
+  testAssignment: string,
   implementationEndpointUrl: string
 ) => {
   const formParams = new URLSearchParams({
@@ -25,7 +24,7 @@ export const checkImplementation = async (
   })
 
   const response = await fetch(
-    `${import.meta.env.VITE_API_ENDPOINT}/${testType}/check`,
+    `${import.meta.env.VITE_API_ENDPOINT}/${testAssignment}/check`,
     {
       method: 'POST',
       headers: {
@@ -35,7 +34,6 @@ export const checkImplementation = async (
     }
   )
   const json = await response.json()
-  console.log(json)
   return json
 }
 
@@ -53,7 +51,6 @@ export const submitInformation = async (testType: string, formData: any) => {
     }
   )
   const json = await response.json()
-  console.log(json)
   return json
 }
 

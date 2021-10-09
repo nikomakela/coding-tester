@@ -1,7 +1,7 @@
 <script lang="ts">
 import { defineComponent, ref, onMounted } from 'vue'
 import { getInstructions as getInstructionsFromAPI } from '../api'
-import { wait } from '../util'
+import { getAssignmentName } from '../util'
 
 type InstructionsResponse = {
   content: string
@@ -11,10 +11,12 @@ export default defineComponent({
   setup() {
     const isLoading = ref(true)
     const instructions = ref('')
+    const testAssignment = getAssignmentName()
 
     const getInstructions = async () => {
-      await wait(1000)
-      const json: InstructionsResponse = await getInstructionsFromAPI()
+      const json: InstructionsResponse = await getInstructionsFromAPI(
+        testAssignment
+      )
       instructions.value = json.content
       isLoading.value = false
     }
