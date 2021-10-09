@@ -25,7 +25,7 @@ export default defineComponent({
 
 <style scoped>
 header {
-  min-height: 75vh;
+  min-height: 50vh;
 }
 h1 {
   font-size: 75px;
