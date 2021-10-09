@@ -3,8 +3,10 @@ from django.http import HttpResponseBadRequest, HttpResponseRedirect
 from django.templatetags.static import static
 from django.urls import reverse
 from django.utils import timezone
+from django.http import JsonResponse
+from django.template.loader import render_to_string
 
-from .models import Submission, PassedTest
+from .models import Submission
 from .testing import run_tests_against, FailedTest
 
 jinja_context = dict(
@@ -15,6 +17,11 @@ jinja_context = dict(
 
 
 def submission_form(request, **kw):
+    if request.GET.get("format") == "json":
+        assignment = jinja_context["assignment"]
+        explanation_template = f"tester/explanations/{assignment}.jinja"
+        content = render_to_string(explanation_template, jinja_context)
+        return JsonResponse({"content": content}, safe=True)
     return render(request, "tester/submission_form.jinja", {**jinja_context, **kw})
 
 
