@@ -36,11 +36,19 @@ export default defineComponent({
       work_experience: '99 years',
       format: 'json',
     })
+    const formError: Ref<string | null> = ref(null)
+    const testAssignment = ref(
+      location.pathname !== '/'
+        ? location.pathname.substring(1)
+        : location.pathname
+    )
 
     return {
       isSaving,
       formStatus,
       formData,
+      testAssignment,
+      formError,
     }
   },
   methods: {
@@ -48,22 +56,24 @@ export default defineComponent({
       if (!this.formData.endpoint_url) return
 
       this.isSaving = true
+      this.formError = null
+
       const json = await checkImplementation(
-        'fibonacci',
+        this.testAssignment,
         this.formData.endpoint_url
       )
-      console.log(json)
       this.isSaving = false
+
       if (json.results?.id) {
         this.formData.id = json.results.id
         this.formStatus = FormStatus.Success
+      } else {
+        this.formError = `${json.reason}, ${json.problem}`
       }
     },
     async finalSubmit() {
       this.isSaving = true
-      console.log('finalSubmit')
-      const json = await submitInformation('fibonacci', this.formData)
-      console.log(json)
+      const json = await submitInformation(this.testAssignment, this.formData)
       this.isSaving = false
       this.formStatus = FormStatus.Final
     },
@@ -101,6 +111,10 @@ export default defineComponent({
           <span v-if="isSaving">Testing your solution... </span>
           <span v-else> Submit </span>
         </button>
+
+        <p v-if="formError" class="mt-4 bg-red-400 p-4">
+          Error found in the solution: {{ formError }}
+        </p>
       </div>
 
       <div v-if="formStatus === 'success' || formStatus === 'final'">

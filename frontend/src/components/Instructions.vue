@@ -11,10 +11,16 @@ export default defineComponent({
   setup() {
     const isLoading = ref(true)
     const instructions = ref('')
+    const testAssignment =
+      location.pathname !== '/'
+        ? location.pathname.substring(1)
+        : location.pathname
 
     const getInstructions = async () => {
       await wait(1000)
-      const json: InstructionsResponse = await getInstructionsFromAPI()
+      const json: InstructionsResponse = await getInstructionsFromAPI(
+        testAssignment
+      )
       instructions.value = json.content
       isLoading.value = false
     }
