@@ -100,6 +100,10 @@ def save_submission(request, **kw):
     submission.applicant_address = request.POST["applicant_address"]
     submission.submission_code_address = request.POST["source_code_url"]
     submission.save()
+
+    if request.POST.get("format") == "json":
+        return JsonResponse({"results": model_to_dict(submission)}, safe=True)
+
     return render(
         request,
         "tester/submission_accepted.jinja",
