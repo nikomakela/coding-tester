@@ -22,10 +22,10 @@ export default defineComponent({
 
 <template>
   <Hero title="Do you have what it takes to be a Maverick?"></Hero>
-  <Section>
+  <Section class="bg-red-400">
     <Instructions />
   </Section>
-  <Section>
+  <Section class="bg-gray-700">
     <Form />
   </Section>
 </template>
