@@ -29,7 +29,7 @@ export default defineComponent({
     const formData: Ref<FormData> = ref({
       endpoint_url: 'https://fibonacci-sequence-test.herokuapp.com/',
       id: null,
-      applicant_name: 'Jussi Pölkki & Niko Kivelä',
+      applicant_name: 'Jussi Pölkki & Niko Lindroos',
       applicant_address: 'jussi+niko@mavericks.fi',
       applicant_phone: '+358501234567',
       source_code_url: 'https://github.com/nikomakela/coding-tester',
