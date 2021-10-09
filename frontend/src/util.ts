@@ -6,3 +6,6 @@ export const wait = async (ms: number) => {
     }, ms)
   })
 }
+
+export const getAssignmentName = () =>
+  location.pathname !== '/' ? location.pathname.substring(1) : 'fibonacci' // <-- DEFAULT ASSIGNMENT

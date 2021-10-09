@@ -1,6 +1,7 @@
 <script lang="ts">
 import { ref, defineComponent, Ref } from 'vue'
 import { checkImplementation, submitInformation } from '../api'
+import { getAssignmentName } from '../util'
 
 enum FormStatus {
   Initial = 'initial',
@@ -15,8 +16,8 @@ interface FormData {
   applicant_name: string | null
   applicant_address: string | null
   applicant_phone: string | null
-  own_tech_competence: string | null
-  work_experience: string | null
+  own_tech_competence: string
+  work_experience: string
   source_code_url: string | null
   format: string
 }
@@ -28,8 +29,8 @@ export default defineComponent({
     const formData: Ref<FormData> = ref({
       endpoint_url: 'https://fibonacci-sequence-test.herokuapp.com/',
       id: null,
-      applicant_name: 'Jussi Pölkki',
-      applicant_address: 'jussi.polkki@mavericks.fi',
+      applicant_name: 'Jussi Pölkki & Niko Kivelä',
+      applicant_address: 'jussi+niko@mavericks.fi',
       applicant_phone: '+358501234567',
       source_code_url: 'https://github.com/nikomakela/coding-tester',
       own_tech_competence: 'Typescript & Django',
@@ -37,11 +38,7 @@ export default defineComponent({
       format: 'json',
     })
     const formError: Ref<string | null> = ref(null)
-    const testAssignment = ref(
-      location.pathname !== '/'
-        ? location.pathname.substring(1)
-        : location.pathname
-    )
+    const testAssignment = getAssignmentName()
 
     return {
       isSaving,
@@ -98,7 +95,9 @@ export default defineComponent({
           type="text"
           v-model="formData.endpoint_url"
           placeholder="Endpoint URL..."
-          :disabled="formStatus === 'success'"
+          :disabled="
+            isSaving || formStatus === 'success' || formStatus === 'final'
+          "
         />
       </div>
 
@@ -131,6 +130,7 @@ export default defineComponent({
             type="name"
             v-model="formData.applicant_name"
             placeholde="Input name"
+            :disabled="isSaving || formStatus === 'final'"
           />
         </div>
 
@@ -141,6 +141,7 @@ export default defineComponent({
             type="email"
             v-model="formData.applicant_address"
             placeholde="Input email"
+            :disabled="isSaving || formStatus === 'final'"
           />
         </div>
 
@@ -151,6 +152,7 @@ export default defineComponent({
             type="phone"
             v-model="formData.applicant_phone"
             placeholde="Input phone"
+            :disabled="isSaving || formStatus === 'final'"
           />
         </div>
 
@@ -164,6 +166,7 @@ export default defineComponent({
             type="email"
             v-model="formData.source_code_url"
             placeholde="Input URL"
+            :disabled="isSaving || formStatus === 'final'"
           />
         </div>
 
@@ -171,22 +174,22 @@ export default defineComponent({
           <label for="own_tech_competence"
             >Your favorite languages or tech:</label
           >
-          <input
+          <textarea
             id="own_tech_competence"
             type="email"
             v-model="formData.own_tech_competence"
-            placeholde="Input "
-          />
+            :disabled="isSaving || formStatus === 'final'"
+          ></textarea>
         </div>
 
         <div class="form-group">
           <label for="work_experience">Your brief work experience:</label>
-          <input
+          <textarea
             id="work_experience"
             type="email"
             v-model="formData.work_experience"
-            placeholde="Tell us some things you have done."
-          />
+            :disabled="isSaving || formStatus === 'final'"
+          ></textarea>
         </div>
 
         <div v-if="formStatus === 'success'">
@@ -224,8 +227,12 @@ label {
 input {
   @apply p-2;
 }
-input:disabled {
-  @apply cursor-not-allowed;
+textarea {
+  @apply p-2 h-32;
+}
+input:disabled,
+textarea:disabled {
+  @apply cursor-not-allowed bg-gray-500;
 }
 button {
   @apply bg-blue-500 px-4 py-2;
