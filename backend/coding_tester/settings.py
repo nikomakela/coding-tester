@@ -11,7 +11,15 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
+import environ
 
+env = environ.Env(
+    DEBUG=(bool, True),
+    DATABASE_URL=(str, ""),
+    PORT=(int, 8000),
+    VAR_ROOT=(str, "."),
+    ALLOWED_HOSTS=(list, []),
+)
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -34,7 +42,7 @@ AUTHENTICATION_BACKENDS = [
     # Needed to login by username in Django admin, regardless of `allauth`
     "django.contrib.auth.backends.ModelBackend",
     # `allauth` specific authentication methods, such as login by e-mail
-    "allauth.account.auth_backends.AuthenticationBackend",
+    # "allauth.account.auth_backends.AuthenticationBackend",
 ]
 
 INSTALLED_APPS = [
@@ -44,14 +52,13 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "django.contrib.sites",
-    "djongo",
-    "allauth",
-    "allauth.account",
-    "allauth.socialaccount",
-    "allauth.socialaccount.providers.google",
-    "allauth.socialaccount.providers.linkedin_oauth2",
-    "allauth.socialaccount.providers.github",
+    # "allauth",
+    # "allauth.account",
+    # "allauth.socialaccount",
+    # "allauth.socialaccount.providers.google",
+    # "allauth.socialaccount.providers.linkedin_oauth2",
+    # "allauth.socialaccount.providers.github",
+    "tester",
 ]
 
 SITE_ID = 1
@@ -69,6 +76,14 @@ MIDDLEWARE = [
 ROOT_URLCONF = "coding_tester.urls"
 
 TEMPLATES = [
+    {
+        "BACKEND": "django.template.backends.jinja2.Jinja2",
+        "DIRS": ["tester/jinja2"],
+        "APP_DIRS": True,
+        "OPTIONS": {
+            # "match_extension": ".jinja",
+        },
+    },
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
         "DIRS": [],
@@ -91,20 +106,26 @@ WSGI_APPLICATION = "coding_tester.wsgi.application"
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
 
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "djongo",
+#         "NAME": "coding-tester",
+#         "CLIENT": {
+#             "host": "mongodb://mongo:27017",
+#             "username": "coding-tester",
+#             "password": "coding-tester",
+#             "authSource": "admin",
+#             "authMechanism": "SCRAM-SHA-1",
+#         },
+#     }
+# }
+
 DATABASES = {
     "default": {
-        "ENGINE": "djongo",
-        "NAME": "coding-tester",
-        "CLIENT": {
-            "host": "mongodb://localhost:27017",
-            "username": "coding-tester",
-            "password": "coding-tester",
-            "authSource": "admin",
-            "authMechanism": "SCRAM-SHA-1",
-        },
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": BASE_DIR / "db.sqlite3",
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -143,8 +164,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = "/static/"
+STATIC_ROOT = env.path("VAR_ROOT")("static")
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")

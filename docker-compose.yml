@@ -1,35 +1,37 @@
 # Use postgres/example user/password credentials
 version: "3"
 services:
-  mongo:
-    image: mongo
-    restart: always
-<<<<<<< HEAD
-    ports:
-      - "27017:27017"
-=======
->>>>>>> 7f209f3f8024d14b2e73946005b1467306237b5a
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: coding-tester
-      MONGO_INITDB_ROOT_PASSWORD: coding-tester
+  # mongo:
+  #   image: mongo
+  #   restart: always
+  #   ports:
+  #     - "27017:27017"
+  #   environment:
+  #     MONGO_INITDB_ROOT_USERNAME: coding-tester
+  #     MONGO_INITDB_ROOT_PASSWORD: coding-tester
 
   backend:
     build: ./backend
-    #command: gunicorn coding_tester.wsgi:application --bind 0.0.0.0:8000
+    # command: gunicorn coding_tester.wsgi:application --bind 0.0.0.0:8000
     command: python manage.py runserver 0.0.0.0:8000
     volumes:
       - static_volume:/code/static
     ports:
       - "8000:8000"
     # expose:
-    #   - 8081
-    depends_on:
-      - mongo
+    # - 8000
+    # depends_on:
+    #   - mongo
+    # environment:
     environment:
-      - DATABASE_NAME:coding-tester
-      - DATABASE_USER:coding-tester
-      - DATABASE_PASSWORD:coding-tester
-      - DATABASE_HOST:mongo
+      DEV_SERVER: 1
+      APPLY_MIGRATIONS: 1
+      ALLOWED_HOSTS: "*"
+      ADMIN_USER_PASSWORD: "admin"
+    #   - DATABASE_NAME:coding-tester
+    #   - DATABASE_USER:coding-tester
+    #   - DATABASE_PASSWORD:coding-tester
+    #   - DATABASE_HOST:mongo
   # nginx:
   #   build: ./nginx
   #   volumes:
